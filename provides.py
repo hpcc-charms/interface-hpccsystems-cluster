@@ -33,7 +33,7 @@ from charms.layer.jujuenv import (
    all_related_units
 )
 
-class ClusterConfigureProvides(RelationBase):
+class ClusterProvides(RelationBase):
 
     #class states(StateList):
     #    node_changed        = State('{relation_name}.node.changed')
@@ -49,13 +49,13 @@ class ClusterConfigureProvides(RelationBase):
     scope = scopes.GLOBAL
 
     #def __init__(self, relation_name, conversation=None):
-    #    super(ClusterConfigureProvides, self).__init__(relation_name, conversation)
+    #    super(ClusterProvides, self).__init__(relation_name, conversation)
     #    self.results = {}
     #    self.primary_state = 'initial'
 
 
 
-    @hook('{provides:configure}-relation-joined')
+    @hook('{provides:cluster}-relation-joined')
     def joined(self):
         conv = self.conversation()
 
@@ -81,7 +81,7 @@ class ClusterConfigureProvides(RelationBase):
         conv.set_local('primary_state', '{relation_name}.node.changed')
 
 
-    @hook('{provides:configure}-relation-{broken,departed}')
+    @hook('{provides:cluster}-relation-{broken,departed}')
     def departed(self):
         conv = self.conversation()
         # remove remote hpcc node ip from the file
@@ -104,7 +104,7 @@ class ClusterConfigureProvides(RelationBase):
         self.set_state('{relation_name}.node.changed')
         conv.set_local('primary_state', '{relation_name}.node.changed')
 
-    @hook('{provides:configure}-relation-changed')
+    @hook('{provides:cluster}-relation-changed')
     def changed(self):
 
         conv = self.conversation()

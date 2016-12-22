@@ -20,7 +20,7 @@ from charmhelpers.core.hookenv import (
 
 from charms.layer.jujuenv import JujuEnv
 
-class ClusterConfigureRequires(RelationBase):
+class ClusterRequires(RelationBase):
     #class states(StateList):
     #    node_changed          = State('{relation_name}.node.changed')
     #    envxml_available      = State('{relation_name}.envxml.available')
@@ -36,11 +36,11 @@ class ClusterConfigureRequires(RelationBase):
     scope = scopes.UNIT
 
     #def __init__(self, relation_name, conversation=None):
-    #    super(ClusterConfigureRequires, self).__init__(relation_name, conversation)
+    #    super(ClusterRequires, self).__init__(relation_name, conversation)
     #    self.result = 'unknown'
     #    self.primary_state = 'initial'
 
-    @hook('{requires:configure}-relation-joined')
+    @hook('{requires:cluster}-relation-joined')
     def joined(self):
         conv = self.conversation()
         status_set('active', JujuEnv.STATUS_MSG['NODE_JOINED'])
@@ -48,7 +48,7 @@ class ClusterConfigureRequires(RelationBase):
         self.set_state(primary_state)
         conv.set_local('primary_state', primary_state)
 
-    @hook('{requires:configure}-relation-{changed}')
+    @hook('{requires:cluster}-relation-{changed}')
     def changed(self):
         conv = self.conversation()
         action = conv.get_remote('action')
@@ -63,7 +63,7 @@ class ClusterConfigureRequires(RelationBase):
         self.set_state(primary_state)
         conv.set_local('primary_state', primary_state)
         
-    #@hook('{requires:configure}-relation-departed')
+    #@hook('{requires:cluster}-relation-departed')
     #def departed(self):
     #   conv = self.conversation()
 

@@ -1,5 +1,5 @@
-name: configure
+name: cluster
 summary: Basic HPCCSystems Platform cluster configuration interface
 version: 0.1
-repo: https://github.com/hpcc-charms/interface-hpccsystems-cluster-configure
+repo: https://github.com/hpcc-charms/interface-hpccsystems-cluster
 
